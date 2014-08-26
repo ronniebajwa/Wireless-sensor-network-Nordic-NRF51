@@ -17,6 +17,7 @@
 #include "modbus.h"
 #include "btble4.h"
 #include "ble_hci.h"
+#include "ble_srv_common.h"
 
 extern bool           m_memory_access_in_progress; /**< Flag to keep track of ongoing operations on persistent memory. */
 extern uint8_t        g_buffer[MAX_BUFFER_SIZE];   /**< UART buffer to handle MODBUS rq/rsp */
@@ -54,7 +55,7 @@ static uint8_t parse_service_data(uint8_array_t * adv_data,
  *
  * @retval Return NRF_SUCCESS if device was found, and NRF_ERROR_NOT_FOUND if not
  */
-static uint32_t find_in_list(ble_gap_addr_t * address, uint8_t * pos)
+static uint32_t find_in_list(ble_gap_addr_t * address, const uint8_t type, uint8_t * pos)
 {
     if (address == NULL)
         return NRF_ERROR_NULL;
@@ -64,11 +65,10 @@ static uint32_t find_in_list(ble_gap_addr_t * address, uint8_t * pos)
 
     for (int i = 0; i < g_devs_list.number && i < BT_MAX_DEVICES; ++i)
     {
-        if (memcmp(address->addr, (void *)g_devs_list.device[i].address.addr,
-                   BLE_GAP_ADDR_LEN) == 0)
+        if ((memcmp(address->addr, g_devs_list.device[i].address.addr, BLE_GAP_ADDR_LEN) == 0) && // does addres match ?
+					 (type == g_devs_list.device[i].type))  // does type match?
         {
-            if (pos != NULL)
-                *pos = i;
+            if (pos != NULL) *pos = i;
             return NRF_SUCCESS;
         }
     }
@@ -83,7 +83,7 @@ static uint32_t find_in_list(ble_gap_addr_t * address, uint8_t * pos)
 void bt_clean_list(void)
 {
     g_devs_list.number = 0;
-    g_memory.number    = 0;
+    g_memory.dev_number    = 0;
 
     for (uint8_t i = 0; i < BT_MAX_DEVICES; ++i)
     {
@@ -113,7 +113,7 @@ static uint32_t add_to_list(ble_gap_addr_t * address, const uint8_t type)
     g_devs_list.device[g_devs_list.number].address.addr_type = address->addr_type;
     g_devs_list.device[g_devs_list.number].type              = type;
     ++g_devs_list.number;
-    g_memory.number = g_devs_list.number;
+    g_memory.dev_number = g_devs_list.number;
 
     return NRF_SUCCESS;
 }
@@ -171,18 +171,18 @@ uint8_t bt_handle_temp_sensor(ble_gap_addr_t * address, uint8_array_t * data)
     temp_sensor_t * temp_sensor;
 
     // err_code = parse_temp(data, &temp);
-    err_code = parse_service_data(data, 0x1809, (uint8_t *)&temp, 4);
+    err_code = parse_service_data(data, BLE_UUID_HEALTH_THERMOMETER_SERVICE, (uint8_t *)&temp, 4);
 
     if (err_code != NRF_SUCCESS)
         return NRF_ERROR_NOT_FOUND;
 
     // err_code = parse_batt_level(data, &batt);
-    err_code = parse_service_data(data, 0x180f, &batt, 1);
+    err_code = parse_service_data(data, BLE_UUID_BATTERY_SERVICE, &batt, 1);
 
     if (err_code != NRF_SUCCESS)
         return NRF_ERROR_NOT_FOUND;
 
-    if (find_in_list(address, &pos) == NRF_ERROR_NOT_FOUND)
+    if (find_in_list(address, TYPE_TEMP_SENSOR, &pos) == NRF_ERROR_NOT_FOUND)
     {
         add_to_list(address, (uint8_t)TYPE_TEMP_SENSOR);
         pos = g_devs_list.number - 1;
@@ -221,7 +221,7 @@ uint8_t bt_handle_led_driver(ble_gap_addr_t * address, uint8_array_t * data)
 
     if (err_code != NRF_SUCCESS) return NRF_ERROR_NOT_FOUND;
 
-    if (find_in_list(address, &pos) == NRF_ERROR_NOT_FOUND)
+    if (find_in_list(address, TYPE_LED_DRIVER, &pos) == NRF_ERROR_NOT_FOUND)
     {
         add_to_list(address, TYPE_LED_DRIVER);
         pos = g_devs_list.number - 1;

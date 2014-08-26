@@ -223,7 +223,7 @@ static uint8_t check_write_rq()
 
     // check if registers quantity is valid
     if ((rq_hdr->regs_quantity[1] == 0) ||
-        rq_hdr->regs_quantity[1] > 0x7B ||
+        rq_hdr->regs_quantity[1] > MB_MAX_REGS_QUANTITY ||
         rq_hdr->regs_quantity[0] > 0)
         return MB_EXC_BAD_LENGTH;
 
@@ -283,7 +283,6 @@ static uint16_t get_CRC(const uint8_t * ptr, int len)
             }
         }
     }
-    // Note, this number has low and high bytes swapped, so use it accordingly (or swap bytes)
     return crc;
 }
 
@@ -405,7 +404,7 @@ static uint8_t prepare_read_rsp()
         rq_hdr->regs_quantity[0] > 0)
         return MB_EXC_BAD_LENGTH;
 
-    // 1 register -> 2 bytes
+    // 1 register equals 2 bytes
     rsp_hdr.byte_count = 2 * rq_hdr->regs_quantity[1]; // regs_quantity[0] should be always == 0, regs_quantity[1] maximum == 0x7D
 
     data_to_send = (uint8_t *)&g_memory +
@@ -453,31 +452,28 @@ static void request_handler(void * p_event_data, uint16_t event_size)
     switch (fun)
     {
         case MB_RQ_READ_REGISTERS:
-            exception = prepare_read_rsp(); // OK
+            exception = prepare_read_rsp();
             break;
 
         case MB_RQ_WRITE_REGISTERS:
             exception = check_write_rq();
 
-            if (exception != MB_EXC_NONE)
-            {
-                // prepare_error_rsp();   // OK
-            }
-            else
+            if (exception == MB_EXC_NONE)
             {
                 bt_error = bt_connect();
 
                 if (bt_error == NRF_SUCCESS)
                     return;
+								
                 exception = MB_EXC_OTHER;
             }
             break;
 
         case MB_RQ_READ_ID:
-            exception = prepare_id_rsp(); // OK
+            exception = prepare_id_rsp();
             break;
 
-        default: exception = MB_EXC_NOT_SUPPORTED; //
+        default: exception = MB_EXC_NOT_SUPPORTED; 
             break;
     }
 

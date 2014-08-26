@@ -10,32 +10,22 @@
 #include "btble4.h"
 
 #define MAX_BUFFER_SIZE         32    /**< Determines maximum UART buffer size. */
+
 #define MB_DEVICE_ADDRESS       1     /**< Device's number on MODBUS. */
 #define MB_RSP_READ_HDR_LENGTH  2     /**< MODBUS read multiple response header size */
 #define MB_RSP_WRITE_HDR_LENGTH 5     /**< MODBUS write multiple response header size */
 #define MB_RSP_ID_HDR_LENGTH    7     /**< MODBUS read device id response header size */
 #define MB_RSP_ERROR_HDR_LENGTH 2     /**< MODBUS error response header size */
 #define MB_ERROR_SHIFT          0x80  /**< shift number used to calculete error code: err_code = function + error_shift */
+#define MB_MAX_REGS_QUANTITY    0x7B  /**< Value to indicate maximum registers number to write/read*/
+
 #define TIMER_PRESCALER         5     /**< Timer prescaler for packet_timeout */
 #define TIMEOUT_TICKS           120   /**< Timer's counter value to indicate packet_timeout */
 
-/* DEVICE INFORMATION RESPONSE SETTINGS */
 #define VENDOR_NAME    "Nordic"       /**< MODBUS Vendor Name */
 #define PRODUCT_CODE   "BLE4"         /**< MODBUS Product Code */
 #define MINOR_REVISION "0.1"          /**< MODBUS Minor Revision  */
 #define OBJECTS_NUMBER 3              /**< MNumber of objects to return as response to Read Device ID request  */
-
-typedef struct
-{
-    uint8_t type;
-    uint8_t data[BT_DATA_LENGTH];
-} mb_bt_device_t;
-
-typedef struct
-{
-    uint16_t       number;
-    mb_bt_device_t dev[BT_MAX_DEVICES];
-} mb_bt_memory_t;
 
 /*//////////////// MODBUS REGISTRY MAP /////////////////
    START
@@ -67,6 +57,10 @@ typedef struct
    END
  */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       //////////////////////////////////////////////
 
+/***********************************************************
+* ENUMS
+***********************************************************/
+
 typedef enum
 {
     MB_RQ_NONE            = 0x00,
@@ -84,7 +78,21 @@ typedef enum
     MB_EXC_OTHER         = 0x04
 } mb_exception_e;
 
-/************* MODBUS RQ HEADERS *********************/
+/***********************************************************
+* STRUCTS
+***********************************************************/
+
+typedef struct
+{
+    uint8_t type;
+    uint8_t data[BT_DATA_LENGTH];
+} mb_bt_device_t;
+
+typedef struct
+{
+    uint16_t       dev_number;
+    mb_bt_device_t dev[BT_MAX_DEVICES];
+} mb_bt_memory_t;
 
 typedef struct // 0x03 read multiple registers header
 {uint8_t address;
@@ -102,7 +110,6 @@ typedef struct // 0x10 write multiple registers header
  uint8_t data[1]; // changable size - depends on bytes_count
 } mb_rq_write_hdr_t;
 
-
 typedef struct // 0x2B get id header
 {uint8_t address;
  uint8_t function;
@@ -111,23 +118,21 @@ typedef struct // 0x2B get id header
  uint8_t object_id;
  uint8_t reserved[3]; } mb_rq_id_hdr_t;
 
-/************* MODBUS RSP HEADERS *************************/
-typedef struct
+typedef struct // 0x03 read multiple registers header
 {
     uint8_t function;
     uint8_t byte_count;
     uint8_t reserved[2];
 } mb_rsp_read_hdr_t;
 
-typedef struct
+typedef struct // 0x10 write multiple registers header
 {
     uint8_t function;
     uint8_t start[2];
     uint8_t regs_quantity[2];
 } mb_rsp_write_hdr_t;
 
-// 0x2B get id header rsp
-typedef struct
+typedef struct // 0x2B get id header rsp
 {
     uint8_t function;
     uint8_t mei_type;       // 0x0E
@@ -139,13 +144,17 @@ typedef struct
     uint8_t reserved[1];
 } mb_rsp_id_hdr_t;
 
-// error rsp header
-typedef struct
+
+typedef struct // error rsp header
 {
     uint8_t error_code;
     uint8_t exception; // number of objects
     uint8_t reserved[2];
 } mb_rsp_error_hdr_t;
+
+/***********************************************************
+* FUNCTIONS DECLARATIONS
+***********************************************************/
 
 void    mb_init(void);
 uint8_t mb_send_error_rsp(uint8_t code, uint8_t exception);

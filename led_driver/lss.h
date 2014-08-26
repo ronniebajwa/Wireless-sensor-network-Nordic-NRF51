@@ -32,7 +32,7 @@
 
 #define DEVICE_NAME               "LED_Driver"   /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME         "Nordic"       /**< Manufacturer. Will be passed to Device Information Service. */
-#define DEFAULT_ADV_INTERVAL      100            /**< The advertising interval (in units of 0.625 ms. This value corresponds to 62.5 ms). */
+#define DEFAULT_ADV_INTERVAL      0x20            /**< The advertising interval (in units of 0.625 ms. This value corresponds to 62.5 ms). */
 #define DEFAULT_ADV_TIMEOUT       0              /**< The advertising timeout in units of seconds. 0 means infinity. */
  
 #define MY_UUID_LED_SERVICE       0x1866         /**< Custom LED State Service UUID */
@@ -54,7 +54,7 @@ typedef struct
 /**@brief LED State Service event type. */
 typedef enum
 {
-    BLE_LSS_EVT_NOTIFICATION_DISABLED, /**< LED State value notification disabled event. */
+		BLE_LSS_EVT_NOTIFICATION_DISABLED, /**< LED State value notification disabled event. */
     BLE_LSS_EVT_NOTIFICATION_ENABLED /**< LED State value notification enabled event. */
 } ble_lss_evt_type_t;
 
