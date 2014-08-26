@@ -36,7 +36,6 @@ typedef enum
     LED_VIOLET = 5,
     LED_CYAN   = 6,
     LED_WHITE  = 7,
-    LED_BLINK  = 8,
     LED_MAX
 } led_color_e;
 

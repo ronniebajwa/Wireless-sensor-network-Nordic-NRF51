@@ -27,6 +27,7 @@
 #include <stdint.h>
 #include "ble.h"
 #include "ble_srv_common.h"
+#include "nordic_common.h"
 #include "led.h"
 
 #define DEVICE_NAME               "LED_Driver"   /**< Name of device. Will be included in the advertising data. */
@@ -38,6 +39,12 @@
 #define MY_UUID_LED_STATE_CHAR    0x2A57         /**< Custom LED State Characteristic UUID */
 #define MY_UUID_ADV_INTERVAL_CHAR 0x2A58         /**< Custom Advertising Interval Characteristic UUID */
 
+#define VENDOR_SPECIFIC_UUID(x)   {0,0,2,0,3,0,4,0,5,0,6,MSB(x),LSB(x),0,1,0}
+
+const static uint8_t my_long_uuid_led_servive[16]       = VENDOR_SPECIFIC_UUID(MY_UUID_LED_SERVICE);      /**< Custom LED State Service UUID - 128bit*/
+const static uint8_t my_long_uuid_led_state_char[16]    = VENDOR_SPECIFIC_UUID(MY_UUID_LED_STATE_CHAR);      /**< Custom LED State Characteristic UUID  - 128bit*/
+const static uint8_t my_long_uuid_adv_interval_char[16] = VENDOR_SPECIFIC_UUID(MY_UUID_ADV_INTERVAL_CHAR);      /**< Custom Advertising Interval Characteristic UUID  - 128bit*/
+
 typedef struct
 {
     led_color_e state;
@@ -47,8 +54,8 @@ typedef struct
 /**@brief LED State Service event type. */
 typedef enum
 {
-    BLE_LSS_EVT_NOTIFICATION_ENABLED, /**< LED State value notification enabled event. */
-    BLE_LSS_EVT_NOTIFICATION_DISABLED /**< LED State value notification disabled event. */
+		BLE_LSS_EVT_NOTIFICATION_DISABLED, /**< LED State value notification disabled event. */
+    BLE_LSS_EVT_NOTIFICATION_ENABLED /**< LED State value notification enabled event. */
 } ble_lss_evt_type_t;
 
 /**@brief LED State Service event. */

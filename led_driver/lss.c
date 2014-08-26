@@ -59,6 +59,8 @@ uint32_t ble_lss_init(ble_lss_t * p_lss, const ble_lss_init_t * p_lss_init)
     // Add service
     BLE_UUID_BLE_ASSIGN(ble_uuid, MY_UUID_LED_SERVICE);
 
+		sd_ble_uuid_vs_add((ble_uuid128_t*)my_long_uuid_led_servive, &ble_uuid.type);
+	
     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,
                                         &ble_uuid,
                                         &p_lss->service_handle);
@@ -128,6 +130,10 @@ void ble_lss_on_ble_evt(ble_lss_t * p_lss, ble_evt_t * p_ble_evt)
  */
 static void on_connect(ble_lss_t * p_lss, const ble_evt_t * p_ble_evt)
 {
+    if((p_ble_evt == NULL) || (p_lss == NULL)){
+			p_lss->conn_handle = BLE_CONN_HANDLE_INVALID;
+      return;
+    }
     p_lss->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 }
 
@@ -140,6 +146,7 @@ static void on_connect(ble_lss_t * p_lss, const ble_evt_t * p_ble_evt)
 static void on_disconnect(ble_lss_t * p_lss, const ble_evt_t * p_ble_evt)
 {
     UNUSED_PARAMETER(p_ble_evt);
+    if((p_ble_evt == NULL) || (p_lss == NULL)) return;
     p_lss->conn_handle = BLE_CONN_HANDLE_INVALID;
 }
 
@@ -151,6 +158,8 @@ static void on_disconnect(ble_lss_t * p_lss, const ble_evt_t * p_ble_evt)
  */
 static void on_lss_cccd_write(ble_lss_t * p_lss, ble_gatts_evt_write_t * p_evt_write)
 {
+    if((p_evt_write == NULL) || (p_lss == NULL)) return;
+	
     if (p_evt_write->len == 2)
     {
         // CCCD written, update notification state
@@ -175,13 +184,15 @@ static void on_lss_cccd_write(ble_lss_t * p_lss, ble_gatts_evt_write_t * p_evt_w
 
 /**@brief Function to set advertising interval.
  *
- * @param[in] p_lss         LED State Service structure.
- * @param[in] p_evt_write   Write event received from the BLE stack.
+ * @param[in] p_lss  LED State Service structure.
+ * @param[in] data   Pointer to data with interval value.
  */
 static void save_adv_interval(ble_lss_t * p_lss, const uint8_t * data)
 {
     uint16_t length;
     uint16_t interval;
+    
+    if((data == NULL) || (p_lss == NULL)) return;
 
     interval  = data[0] & 0xFF;
     interval |= (data[1] << 8) & 0xFF00;
@@ -192,7 +203,7 @@ static void save_adv_interval(ble_lss_t * p_lss, const uint8_t * data)
         if(interval < BLE_GAP_ADV_INTERVAL_MIN) interval = BLE_GAP_ADV_INTERVAL_MIN;
         else interval = BLE_GAP_ADV_INTERVAL_MAX;
 
-        length   = sizeof (interval);
+        length = sizeof (interval);
         sd_ble_gatts_value_set(p_lss->lss_ai_handle.value_handle,
                                0,
                                &length,
@@ -210,6 +221,8 @@ static void save_adv_interval(ble_lss_t * p_lss, const uint8_t * data)
  */
 static void on_write(ble_lss_t * p_lss, ble_evt_t * p_ble_evt)
 {
+		if((p_ble_evt == NULL) || (p_lss == NULL)) return;
+	
     ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
     // save new LED state
@@ -239,7 +252,7 @@ static void on_write(ble_lss_t * p_lss, ble_evt_t * p_ble_evt)
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t led_state_char_add(ble_lss_t * p_lss, const ble_lss_init_t * p_lss_init)
-{
+{	
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_md_t cccd_md;
     ble_gatts_attr_t    attr_char_value;
@@ -247,6 +260,8 @@ static uint32_t led_state_char_add(ble_lss_t * p_lss, const ble_lss_init_t * p_l
     ble_gatts_attr_md_t attr_md;
     uint8_t             char_init_val = (uint8_t)LED_INIT_STATE;
     uint8_t             char_length   = sizeof (char_init_val);
+	
+		if((p_lss_init == NULL) || (p_lss == NULL)) return NRF_ERROR_NULL;
 
     memset(&cccd_md, 0, sizeof (cccd_md));
 
@@ -266,6 +281,7 @@ static uint32_t led_state_char_add(ble_lss_t * p_lss, const ble_lss_init_t * p_l
     char_md.p_sccd_md                = NULL;
 
     BLE_UUID_BLE_ASSIGN(ble_uuid, MY_UUID_LED_STATE_CHAR);
+		sd_ble_uuid_vs_add((ble_uuid128_t*)my_long_uuid_led_state_char, &ble_uuid.type);
 
     memset(&attr_md, 0, sizeof (attr_md));
 
@@ -308,6 +324,8 @@ static uint32_t adv_params_char_add(ble_lss_t * p_lss, const ble_lss_init_t * p_
     ble_gatts_attr_md_t attr_md;
     uint8_t             char_init_val = p_lss->dev_params.adv_interval;
     uint8_t             char_length   = sizeof (char_init_val);
+	
+    if((p_lss_init == NULL) || (p_lss == NULL)) return NRF_ERROR_NULL;
 
     memset(&cccd_md, 0, sizeof (cccd_md));
 
@@ -327,6 +345,7 @@ static uint32_t adv_params_char_add(ble_lss_t * p_lss, const ble_lss_init_t * p_
     char_md.p_sccd_md                = NULL;
 
     BLE_UUID_BLE_ASSIGN(ble_uuid, MY_UUID_ADV_INTERVAL_CHAR);
+		sd_ble_uuid_vs_add((ble_uuid128_t*)my_long_uuid_adv_interval_char, &ble_uuid.type);
 
     memset(&attr_md, 0, sizeof (attr_md));
 
