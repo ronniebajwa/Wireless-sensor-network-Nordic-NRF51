@@ -54,7 +54,7 @@ typedef struct
 /**@brief LED State Service event type. */
 typedef enum
 {
-		BLE_LSS_EVT_NOTIFICATION_DISABLED, /**< LED State value notification disabled event. */
+    BLE_LSS_EVT_NOTIFICATION_DISABLED, /**< LED State value notification disabled event. */
     BLE_LSS_EVT_NOTIFICATION_ENABLED /**< LED State value notification enabled event. */
 } ble_lss_evt_type_t;
 

@@ -248,7 +248,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
 #line 14 "..\\led.c"
-#line 1 "..\\..\\..\\..\\..\\Include\\nrf.h"
+#line 1 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf.h"
 
 
 
@@ -284,7 +284,7 @@ typedef unsigned       __int64 uintmax_t;
 
 
  
-#line 1 "..\\..\\..\\..\\..\\Include\\nrf51.h"
+#line 1 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51.h"
 
  
 
@@ -1427,8 +1427,8 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
 
 
 
-#line 120 "..\\..\\..\\..\\..\\Include\\nrf51.h"
-#line 1 "..\\..\\..\\..\\..\\Include\\system_nrf51.h"
+#line 120 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51.h"
+#line 1 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\system_nrf51.h"
 
 
 
@@ -1465,7 +1465,7 @@ static __inline uint32_t SysTick_Config(uint32_t ticks)
 
 
 
-#line 38 "..\\..\\..\\..\\..\\Include\\system_nrf51.h"
+#line 38 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\system_nrf51.h"
 
 
 extern uint32_t SystemCoreClock;     
@@ -1496,7 +1496,7 @@ extern void SystemCoreClockUpdate (void);
 
 
 
-#line 121 "..\\..\\..\\..\\..\\Include\\nrf51.h"
+#line 121 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51.h"
 
 
  
@@ -1513,7 +1513,7 @@ extern void SystemCoreClockUpdate (void);
 
   #pragma push
   #pragma anon_unions
-#line 148 "..\\..\\..\\..\\..\\Include\\nrf51.h"
+#line 148 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51.h"
 
 
 typedef struct {
@@ -2496,7 +2496,7 @@ typedef struct {
  
 
   #pragma pop
-#line 1141 "..\\..\\..\\..\\..\\Include\\nrf51.h"
+#line 1141 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51.h"
 
 
 
@@ -2505,14 +2505,14 @@ typedef struct {
  
  
 
-#line 1182 "..\\..\\..\\..\\..\\Include\\nrf51.h"
+#line 1182 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51.h"
 
 
  
  
  
 
-#line 1221 "..\\..\\..\\..\\..\\Include\\nrf51.h"
+#line 1221 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51.h"
 
 
    
@@ -2526,8 +2526,8 @@ typedef struct {
 
 
 
-#line 38 "..\\..\\..\\..\\..\\Include\\nrf.h"
-#line 1 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 38 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf.h"
+#line 1 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
 
 
@@ -2614,7 +2614,7 @@ typedef struct {
 
 
 
-#line 36 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 36 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -2752,13 +2752,13 @@ typedef struct {
 
 
  
-#line 184 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 184 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 192 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 192 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 201 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 201 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
 
@@ -2791,163 +2791,163 @@ typedef struct {
  
 
  
-#line 243 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 243 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 255 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 255 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 267 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 267 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 279 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 279 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 291 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 291 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 303 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 303 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 315 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 315 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 327 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 327 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
 
  
-#line 342 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 342 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 354 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 354 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 366 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 366 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 378 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 378 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 390 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 390 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 402 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 402 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 414 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 414 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 426 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 426 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
 
  
-#line 441 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 441 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 453 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 453 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 465 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 465 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 477 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 477 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 489 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 489 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 501 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 501 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 513 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 513 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 525 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 525 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
 
  
-#line 540 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 540 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 552 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 552 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 564 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 564 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 576 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 576 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 588 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 588 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 600 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 600 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 612 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 612 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 624 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 624 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
 
  
-#line 639 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 639 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 651 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 651 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 663 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 663 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 675 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 675 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 687 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 687 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 699 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 699 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 711 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 711 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 723 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 723 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
 
  
-#line 738 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 738 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 750 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 750 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 762 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 762 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 774 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 774 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 786 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 786 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 798 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 798 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 810 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 810 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
-#line 822 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 822 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -4808,7 +4808,7 @@ typedef struct {
 
 
  
-#line 2692 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 2692 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
 
@@ -5066,13 +5066,13 @@ typedef struct {
  
 
  
-#line 2959 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 2959 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
 
  
-#line 2974 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 2974 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -5850,7 +5850,7 @@ typedef struct {
  
 
  
-#line 3757 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 3757 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
 
@@ -6965,7 +6965,7 @@ typedef struct {
  
 
  
-#line 4881 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 4881 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -6978,7 +6978,7 @@ typedef struct {
  
 
  
-#line 4903 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 4903 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -7254,13 +7254,13 @@ typedef struct {
  
 
  
-#line 5188 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 5188 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
 
  
-#line 5199 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 5199 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -7410,7 +7410,7 @@ typedef struct {
 
 
  
-#line 5354 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 5354 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -7459,7 +7459,7 @@ typedef struct {
  
 
  
-#line 5413 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 5413 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -7970,7 +7970,7 @@ typedef struct {
  
 
  
-#line 5932 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 5932 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -8053,7 +8053,7 @@ typedef struct {
  
 
  
-#line 6020 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 6020 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -8316,7 +8316,7 @@ typedef struct {
  
 
  
-#line 6288 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 6288 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -8676,7 +8676,7 @@ typedef struct {
  
 
  
-#line 6665 "..\\..\\..\\..\\..\\Include\\nrf51_bitfields.h"
+#line 6665 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_bitfields.h"
 
  
  
@@ -8906,8 +8906,8 @@ typedef struct {
 
 
  
-#line 39 "..\\..\\..\\..\\..\\Include\\nrf.h"
-#line 1 "..\\..\\..\\..\\..\\Include\\nrf51_deprecated.h"
+#line 39 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf.h"
+#line 1 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_deprecated.h"
 
 
 
@@ -9035,16 +9035,16 @@ typedef struct {
 
  
  
-#line 136 "..\\..\\..\\..\\..\\Include\\nrf51_deprecated.h"
+#line 136 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_deprecated.h"
  
-#line 169 "..\\..\\..\\..\\..\\Include\\nrf51_deprecated.h"
+#line 169 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_deprecated.h"
  
 
 
 
 
  
-#line 431 "..\\..\\..\\..\\..\\Include\\nrf51_deprecated.h"
+#line 431 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf51_deprecated.h"
 
 
 
@@ -9052,12 +9052,12 @@ typedef struct {
 
 
 
-#line 40 "..\\..\\..\\..\\..\\Include\\nrf.h"
+#line 40 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf.h"
 
 
 
 
-#line 1 "..\\..\\..\\..\\..\\Include\\compiler_abstraction.h"
+#line 1 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\compiler_abstraction.h"
 
 
 
@@ -9104,587 +9104,14 @@ typedef struct {
     
 
   
-#line 90 "..\\..\\..\\..\\..\\Include\\compiler_abstraction.h"
+#line 90 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\compiler_abstraction.h"
 
  
 
-#line 45 "..\\..\\..\\..\\..\\Include\\nrf.h"
+#line 45 "C:\\Keil_v5\\ARM\\PACK\\NordicSemiconductor\\nRF_DeviceFamilyPack\\1.1.1\\Device\\Include\\nrf.h"
 
 
 
 
 
 #line 15 "..\\led.c"
-#line 1 "..\\..\\..\\..\\..\\Include\\boards.h"
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-#line 1 "..\\..\\..\\..\\..\\Include\\boards/pca10000.h"
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#line 35 "..\\..\\..\\..\\..\\Include\\boards/pca10000.h"
-
-#line 19 "..\\..\\..\\..\\..\\Include\\boards.h"
-#line 26 "..\\..\\..\\..\\..\\Include\\boards.h"
-
-#line 16 "..\\led.c"
-#line 1 "..\\..\\..\\..\\..\\Include\\nrf_gpio.h"
-
-
-
-#line 5 "..\\..\\..\\..\\..\\Include\\nrf_gpio.h"
-#line 6 "..\\..\\..\\..\\..\\Include\\nrf_gpio.h"
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
- 
-typedef enum
-{
-    NRF_GPIO_PORT_DIR_OUTPUT,       
-    NRF_GPIO_PORT_DIR_INPUT         
-} nrf_gpio_port_dir_t;
-
-
-
-
- 
-typedef enum
-{
-    NRF_GPIO_PIN_DIR_INPUT,   
-    NRF_GPIO_PIN_DIR_OUTPUT   
-} nrf_gpio_pin_dir_t;
-
-
-
-
- 
-typedef enum
-{
-    NRF_GPIO_PORT_SELECT_PORT0 = 0,           
-    NRF_GPIO_PORT_SELECT_PORT1,               
-    NRF_GPIO_PORT_SELECT_PORT2,               
-    NRF_GPIO_PORT_SELECT_PORT3,               
-} nrf_gpio_port_select_t;
-
-
-
-
- 
-typedef enum
-{
-    NRF_GPIO_PIN_NOPULL   = (0x00UL),                 
-    NRF_GPIO_PIN_PULLDOWN = (0x01UL),                 
-    NRF_GPIO_PIN_PULLUP   = (0x03UL),                   
-} nrf_gpio_pin_pull_t;
-
-
-
-
- 
-typedef enum
-{
-    NRF_GPIO_PIN_NOSENSE    = (0x00UL),              
-    NRF_GPIO_PIN_SENSE_LOW  = (0x03UL),                   
-    NRF_GPIO_PIN_SENSE_HIGH = (0x02UL),                  
-} nrf_gpio_pin_sense_t;
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_range_cfg_output(uint32_t pin_range_start, uint32_t pin_range_end)
-{
-     
-    for (; pin_range_start <= pin_range_end; pin_range_start++)
-    {
-        ((NRF_GPIO_Type *) 0x50000000UL)->PIN_CNF[pin_range_start] = ((0x00UL) << (16UL))
-                                        | ((0x00UL) << (8UL))
-                                        | ((0x00UL) << (2UL))
-                                        | ((1UL) << (1UL))
-                                        | ((1UL) << (0UL));
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_range_cfg_input(uint32_t pin_range_start, uint32_t pin_range_end, nrf_gpio_pin_pull_t pull_config)
-{
-     
-    for (; pin_range_start <= pin_range_end; pin_range_start++)
-    {
-        ((NRF_GPIO_Type *) 0x50000000UL)->PIN_CNF[pin_range_start] = ((0x00UL) << (16UL))
-                                        | ((0x00UL) << (8UL))
-                                        | (pull_config << (2UL))
-                                        | ((0UL) << (1UL))
-                                        | ((0UL) << (0UL));
-    }
-}
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_cfg_output(uint32_t pin_number)
-{
-     
-    ((NRF_GPIO_Type *) 0x50000000UL)->PIN_CNF[pin_number] = ((0x00UL) << (16UL))
-                                            | ((0x00UL) << (8UL))
-                                            | ((0x00UL) << (2UL))
-                                            | ((1UL) << (1UL))
-                                            | ((1UL) << (0UL));
-}
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_cfg_input(uint32_t pin_number, nrf_gpio_pin_pull_t pull_config)
-{
-     
-    ((NRF_GPIO_Type *) 0x50000000UL)->PIN_CNF[pin_number] = ((0x00UL) << (16UL))
-                                        | ((0x00UL) << (8UL))
-                                        | (pull_config << (2UL))
-                                        | ((0UL) << (1UL))
-                                        | ((0UL) << (0UL));
-}
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_cfg_sense_input(uint32_t pin_number, nrf_gpio_pin_pull_t pull_config, nrf_gpio_pin_sense_t sense_config)
-{
-     
-    ((NRF_GPIO_Type *) 0x50000000UL)->PIN_CNF[pin_number] = (sense_config << (16UL))
-                                        | ((0x00UL) << (8UL))
-                                        | (pull_config << (2UL))
-                                        | ((0UL) << (1UL))
-                                        | ((0UL) << (0UL));
-}
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_pin_dir_set(uint32_t pin_number, nrf_gpio_pin_dir_t direction)
-{
-    if(direction == NRF_GPIO_PIN_DIR_INPUT)
-    {
-        ((NRF_GPIO_Type *) 0x50000000UL)->PIN_CNF[pin_number] =
-          ((0x00UL) << (16UL))
-        | ((0x00UL) << (8UL))
-        | ((0x00UL) << (2UL))
-        | ((0UL) << (1UL))
-        | ((0UL) << (0UL));
-    }
-    else
-    {
-        ((NRF_GPIO_Type *) 0x50000000UL)->DIRSET = (1UL << pin_number);
-    }
-}
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_pin_set(uint32_t pin_number)
-{
-    ((NRF_GPIO_Type *) 0x50000000UL)->OUTSET = (1UL << pin_number);
-}
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_pin_clear(uint32_t pin_number)
-{
-    ((NRF_GPIO_Type *) 0x50000000UL)->OUTCLR = (1UL << pin_number);
-}
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_pin_toggle(uint32_t pin_number)
-{
-    const uint32_t pin_bit   = 1UL << pin_number;
-    const uint32_t pin_state = ((((NRF_GPIO_Type *) 0x50000000UL)->OUT >> pin_number) & 1UL);
-    
-    if (pin_state == 0)
-    {
-        
-        ((NRF_GPIO_Type *) 0x50000000UL)->OUTSET = pin_bit;        
-    }
-    else
-    {
-        
-        ((NRF_GPIO_Type *) 0x50000000UL)->OUTCLR = pin_bit;       
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_pin_write(uint32_t pin_number, uint32_t value)
-{
-    if (value == 0)
-    {
-        nrf_gpio_pin_clear(pin_number);
-    }
-    else
-    {
-        nrf_gpio_pin_set(pin_number);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline uint32_t nrf_gpio_pin_read(uint32_t pin_number)
-{
-    return  ((((NRF_GPIO_Type *) 0x50000000UL)->IN >> pin_number) & 1UL);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_word_byte_write(volatile uint32_t * word_address, uint8_t byte_no, uint8_t value)
-{
-    *((volatile uint8_t*)(word_address) + byte_no) = value;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline uint8_t nrf_gpio_word_byte_read(const volatile uint32_t* word_address, uint8_t byte_no)
-{
-    return (*((const volatile uint8_t*)(word_address) + byte_no));
-}
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_port_dir_set(nrf_gpio_port_select_t port, nrf_gpio_port_dir_t dir)
-{
-    if (dir == NRF_GPIO_PORT_DIR_OUTPUT)
-    {
-        nrf_gpio_word_byte_write(&((NRF_GPIO_Type *) 0x50000000UL)->DIRSET, port, 0xFF);
-    }
-    else
-    {
-        nrf_gpio_range_cfg_input(port*8, (port+1)*8-1, NRF_GPIO_PIN_NOPULL);
-    }
-}
-
-
-
-
-
-
-
- 
-static __inline uint8_t nrf_gpio_port_read(nrf_gpio_port_select_t port)
-{
-    return nrf_gpio_word_byte_read(&((NRF_GPIO_Type *) 0x50000000UL)->IN, port);
-}
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_port_write(nrf_gpio_port_select_t port, uint8_t value)
-{
-    nrf_gpio_word_byte_write(&((NRF_GPIO_Type *) 0x50000000UL)->OUT, port, value);
-}
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_port_set(nrf_gpio_port_select_t port, uint8_t set_mask)
-{
-    nrf_gpio_word_byte_write(&((NRF_GPIO_Type *) 0x50000000UL)->OUTSET, port, set_mask);
-}
-
-
-
-
-
-
-
-
-
-
-
- 
-static __inline void nrf_gpio_port_clear(nrf_gpio_port_select_t port, uint8_t clr_mask)
-{
-    nrf_gpio_word_byte_write(&((NRF_GPIO_Type *) 0x50000000UL)->OUTCLR, port, clr_mask);
-}
-
- 
-
-#line 17 "..\\led.c"
-#line 1 "..\\led.h"
-
-
-
-
-
-
-
-
-
-
- 
-
- 
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
- 
-typedef enum
-{
-    LED_OFF    = 0,
-    LED_RED    = 1,
-    LED_GREEN  = 2,
-    LED_YELLOW = 3,
-    LED_BLUE   = 4,
-    LED_VIOLET = 5,
-    LED_CYAN   = 6,
-    LED_WHITE  = 7,
-    LED_BLINK  = 8,
-    LED_MAX
-} led_color_e;
-
-
-
-
-
- 
-void led_init(void);
-
-
-
-
- 
-void led_setState(const led_color_e color);
-
-
-
- 
- 
-#line 18 "..\\led.c"
-
-
-
-
- 
-void led_init(void)
-{
-    nrf_gpio_cfg_output(21);
-    nrf_gpio_cfg_output(22);
-    nrf_gpio_cfg_output(23);
-    led_setState(LED_RED);
-}
-
-
-
-
-
- 
-void led_setState(const led_color_e color)
-{
-    if (color & LED_RED)
-        nrf_gpio_pin_clear(21);
-    else
-        nrf_gpio_pin_set(21);
-
-    if (color & LED_BLUE)
-        nrf_gpio_pin_clear(23);
-    else
-        nrf_gpio_pin_set(23);
-
-    if (color & LED_GREEN)
-        nrf_gpio_pin_clear(22);
-    else
-        nrf_gpio_pin_set(22);
-}
-
-
-
-
- 

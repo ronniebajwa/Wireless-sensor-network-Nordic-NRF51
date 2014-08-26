@@ -348,11 +348,11 @@ ARM Macro Assembler    Page 6
               00000800 
               00000000 
 Command Line: --debug --xref --cpu=Cortex-M0 --apcs=interwork --depend=.\_build
-\arm_startup_nrf51.d -o.\_build\arm_startup_nrf51.o -IC:\Users\mibu\Desktop\pro
-j\Nordic\Board\pca10000\s110\led_driver\arm\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMSIS
-\4.1.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_DeviceFamily
-Pack\1.1.1\Device\Include --predefine="__EVAL SETA 1" --list=.\_build\arm_start
-up_nrf51.lst RTE\Device\nRF51822_xxAA\arm_startup_nrf51.s
+\arm_startup_nrf51.d -o.\_build\arm_startup_nrf51.o -IC:\Users\mibu\Desktop\Git
+Hub\Wireless-sensors-system-Nordic-NRF51\led_driver\arm\RTE -IC:\Keil_v5\ARM\PA
+CK\ARM\CMSIS\4.1.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\NordicSemiconductor\nRF_
+DeviceFamilyPack\1.1.1\Device\Include --predefine="__EVAL SETA 1" --list=.\_bui
+ld\arm_startup_nrf51.lst RTE\Device\nRF51822_xxAA\arm_startup_nrf51.s
 
 
 
