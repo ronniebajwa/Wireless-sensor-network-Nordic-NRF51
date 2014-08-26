@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -18,14 +18,20 @@
 #include "btble4.h"
 #include "ble_hci.h"
 
-extern bool m_memory_access_in_progress; /**< Flag to keep track of ongoing operations on persistent memory. */
+extern bool           m_memory_access_in_progress; /**< Flag to keep track of ongoing operations on persistent memory. */
+extern uint8_t        g_buffer[MAX_BUFFER_SIZE];   /**< UART buffer to handle MODBUS rq/rsp */
+extern mb_bt_memory_t g_memory;                    /**< MODBUS registers map with sensors' data. */
+bt_devices_list_t     g_devs_list;                 /**< MODBUS registers map with sensors' data. */
+ble_gap_scan_params_t g_scan_param;                /**< Scan parameters requested for scanning and connection. */
+int8_t                g_conn_dev_idx = -1;         /**< Connected device's index ont the list, -1 if no device is connected */
 
-extern mb_bt_memory_t g_memory;
-bt_devices_list_t     g_devs_list;
-ble_gap_scan_params_t g_scan_param; /**< Scan parameters requested for scanning and connection. */
-int8_t                g_conn_dev_idx = -1;
-
-extern uint8_t g_buffer[MAX_BUFFER_SIZE];
+const ble_gap_conn_params_t g_connection_param =   /**< Connection parameters requested for connection. */
+{
+    (uint16_t)MIN_CONNECTION_INTERVAL, // Minimum connection
+    (uint16_t)MAX_CONNECTION_INTERVAL, // Maximum connection
+    0,                                 // Slave latency
+    (uint16_t)SUPERVISION_TIMEOUT      // Supervision time-out
+};
 
 /**************************************************************
 *   STATIC FUNCTIONS DECLARATIONS
@@ -35,32 +41,26 @@ static uint8_t parse_service_data(uint8_array_t * adv_data,
                                   uint8_t       * value,
                                   uint8_t         length);
 
-/**
- * @brief Connection parameters requested for connection.
- */
-const ble_gap_conn_params_t g_connection_param =
-{
-    (uint16_t)MIN_CONNECTION_INTERVAL, // Minimum connection
-    (uint16_t)MAX_CONNECTION_INTERVAL, // Maximum connection
-    0,                                 // Slave latency
-    (uint16_t)SUPERVISION_TIMEOUT      // Supervision time-out
-};
 
 /***************************************************************
  * Devices' list manipulating
  ****************************************************************/
 
 /**
- * @brief Browses device's list to check if passed address is already saved on the list, if so, on which position.
+ * @brief Browses devices list to check if passed address is already saved on the list, if so, on which position.
  *
- * @param[in]  The device address.
- * @param[out]  Device position on the list.
+ * @param[in]  address Device address.
+ * @param[out] pos     Device position on the list.
  *
- * @retval Return 1 if device was found, and 0 if not
+ * @retval Return NRF_SUCCESS if device was found, and NRF_ERROR_NOT_FOUND if not
  */
-static uint8_t find_in_list(ble_gap_addr_t * address, uint8_t * pos)
+static uint32_t find_in_list(ble_gap_addr_t * address, uint8_t * pos)
 {
-    *pos = 0;
+    if (address == NULL)
+        return NRF_ERROR_NULL;
+
+    if (pos != NULL)
+        *pos = 0;
 
     for (int i = 0; i < g_devs_list.number && i < BT_MAX_DEVICES; ++i)
     {
@@ -69,10 +69,10 @@ static uint8_t find_in_list(ble_gap_addr_t * address, uint8_t * pos)
         {
             if (pos != NULL)
                 *pos = i;
-            return 1;
+            return NRF_SUCCESS;
         }
     }
-    return 0;
+    return NRF_ERROR_NOT_FOUND;
 }
 
 
@@ -95,22 +95,32 @@ void bt_clean_list(void)
 /**
  * @brief Add device to list
  *
- * @param[in]  The device address. The first free index is indicated by global integer.
+ * @param[in]  address The device address. The first free index is indicated by global integer.
+ * @param[in]  type    The device type.
  *
+ * @retval NRF_SUCCESS if device was found, error code otherwise.
  */
-static void add_to_list(ble_gap_addr_t * address, uint8_t type)
+static uint32_t add_to_list(ble_gap_addr_t * address, const uint8_t type)
 {
+    if ((address == NULL) || (address->addr == NULL)) return NRF_ERROR_NULL;
+
+    if (g_devs_list.number >= BT_MAX_DEVICES)return NRF_ERROR_NO_MEM;
+
     memcpy((void *)g_devs_list.device[g_devs_list.number].address.addr,
            address->addr,
            BLE_GAP_ADDR_LEN);
+
     g_devs_list.device[g_devs_list.number].address.addr_type = address->addr_type;
     g_devs_list.device[g_devs_list.number].type              = type;
     ++g_devs_list.number;
     g_memory.number = g_devs_list.number;
+
+    return NRF_SUCCESS;
 }
 
-
-/**@breif Function to start scanning.
+/**
+ * @brief Function to start scanning.
+ *
  */
 void bt_scan_start(void)
 {
@@ -143,11 +153,11 @@ void bt_scan_start(void)
 
 /**
  * @brief Browses advertising packet for useful data (temperature & battery level).
-                    If whole this data is found, function check if the device's address is already on the list.
-                    If the device isn't on the list, it is added, and sensors count is incremented
+ *        If whole this data is found, function check if the device's address is already on the list.
+ *        If the device isn't on the list, it is added, and sensors count is incremented
  *
- * @param[in]  The device address.
- * @param[in]  Advertising packet data.
+ * @param[in]  address The device address.
+ * @param[in]  data    Advertising packet data.
  *
  * @retval NRF_SUCCESS if the data type is found in the report.
  * @retval NRF_ERROR_NOT_FOUND if the data type could not be found.
@@ -172,7 +182,7 @@ uint8_t bt_handle_temp_sensor(ble_gap_addr_t * address, uint8_array_t * data)
     if (err_code != NRF_SUCCESS)
         return NRF_ERROR_NOT_FOUND;
 
-    if (!find_in_list(address, &pos))
+    if (find_in_list(address, &pos) == NRF_ERROR_NOT_FOUND)
     {
         add_to_list(address, (uint8_t)TYPE_TEMP_SENSOR);
         pos = g_devs_list.number - 1;
@@ -189,16 +199,15 @@ uint8_t bt_handle_temp_sensor(ble_gap_addr_t * address, uint8_array_t * data)
 
 
 /**
- * @brief Browses advertising packet for useful data (led_state).
-                    If whole this data is found, function check if the device's address is already on the list.
-                    If the device isn't on the list, it is added, and sensors count is incremented
+ * @brief Browses advertising packet for useful data - led_state.
+ *        If this data is found, function check if the device's address is already on the list.
+ *        If the device isn't on the list, it is added, and number of devices is incremented.
  *
- * @param[in]  The device address.
- * @param[in]  Advertising packet data.
+ * @param[in]  address The device address.
+ * @param[in]  data    Advertising packet data.
  *
  * @retval NRF_SUCCESS if the data type is found in the report.
- * @retval NRF_ERROR_NOT_FOUND if the data type could not be found.
- */
+*/
 uint8_t bt_handle_led_driver(ble_gap_addr_t * address, uint8_array_t * data)
 {
     uint32_t       err_code;
@@ -206,13 +215,13 @@ uint8_t bt_handle_led_driver(ble_gap_addr_t * address, uint8_array_t * data)
     uint8_t        pos;
     led_driver_t * led_driver;
 
-    // err_code = parse_temp(data, &temp);
-    err_code = parse_service_data(data, 0x1866, (uint8_t *)&state, 1);
+    if(address == NULL || data == NULL) return NRF_ERROR_NULL;
+	
+    err_code = parse_service_data(data, MY_UUID_LED_SERVICE, (uint8_t *)&state, sizeof(state));
 
-    if (err_code != NRF_SUCCESS)
-        return NRF_ERROR_NOT_FOUND;
+    if (err_code != NRF_SUCCESS) return NRF_ERROR_NOT_FOUND;
 
-    if (!find_in_list(address, &pos))
+    if (find_in_list(address, &pos) == NRF_ERROR_NOT_FOUND)
     {
         add_to_list(address, TYPE_LED_DRIVER);
         pos = g_devs_list.number - 1;
@@ -228,15 +237,9 @@ uint8_t bt_handle_led_driver(ble_gap_addr_t * address, uint8_array_t * data)
 
 
 /**
- * @brief Browses advertising packet for useful data (led_state).
-                    If whole this data is found, function check if the device's address is already on the list.
-                    If the device isn't on the list, it is added, and sensors count is incremented
+ * @brief Connect to a device.
  *
- * @param[in]  The device address.
- * @param[in]  Advertising packet data.
- *
- * @retval NRF_SUCCESS if the data type is found in the report.
- * @retval NRF_ERROR_NOT_FOUND if the data type could not be found.
+ * @retval NRF_SUCCESS if connection was sucessfully initiated, error code otherwise.
  */
 uint32_t bt_connect(void)
 {
@@ -302,11 +305,9 @@ uint32_t bt_write_to_device(const uint16_t conn_handle)
     uint8_t             length;
     mb_rq_write_hdr_t * rq_packet;
 
-    if (g_conn_dev_idx < 0)
-    {
-        return NRF_ERROR_INVALID_ADDR;
-    }
-
+    if (g_conn_dev_idx < 0) return NRF_ERROR_INVALID_ADDR;
+	  if (conn_handle == BLE_CONN_HANDLE_INVALID) return NRF_ERROR_NULL;
+	
     rq_packet = (mb_rq_write_hdr_t *)g_buffer;
 
     type = g_devs_list.device[g_conn_dev_idx].type;
@@ -359,33 +360,50 @@ uint32_t bt_disconnect(const uint16_t conn_handle)
 *   STATIC FUNCTIONS DEFINITIONS
 **************************************************************/
 /**
- * @brief Parse array to find useful data included in service data
+ * @brief Parse advertising packet to find demanded service data included in passed packet
  *
- * @param[in]  Advertisement packet or other data.
- * @param[out]  Found value.
+ * @param[in]  adv_data     Advertisement packet data.
+ * @param[in]  uuid         Service UUID demanded to search.
+ * @param[out] value        Value to return.
+ * @param[in]  value_length Expected data length.
  *
- * @retval Return NRF_SUCCES if service data was found, NRF_ERROR_NOT_FOUND otherwise.
+ * @retval Return NRF_SUCCES if battery level value was found, NRF_ERROR_NOT_FOUND otherwise
  */
 static uint8_t parse_service_data(uint8_array_t * adv_data,
                                   uint16_t        uuid,
                                   uint8_t       * value,
                                   uint8_t         length)
 {
-    uint8_t expr[3];
+    if ((adv_data->p_data == NULL) || (value == NULL) ) return NRF_ERROR_NULL;
 
-    expr[0] = 0x16; // service data
-    expr[1] = *((uint8_t *)&uuid);
-    expr[2] = *(((uint8_t *)&uuid) + 1);
+    if (length == 0) return NRF_ERROR_DATA_SIZE;
 
-    for (uint8_t i = 0; i < adv_data->size - 2 - length; ++i)
+    const uint8_t       * adv_packet_ptr = adv_data->p_data;
+    const uint8_t * const adv_packet_end = adv_data->p_data + adv_data->size - 1; // the last byte of advertising packet
+    uint32_t              service_data_length;
+    uint32_t              packet_length;
+    uint8_t               expr[4]; // expression to find in adv_data
+
+    service_data_length = length + sizeof (uuid) + sizeof (uint8_t);
+
+    if (service_data_length >= BLE_GAP_ADV_MAX_SIZE) return NRF_ERROR_DATA_SIZE;  // return if (service_data_length) + (packet_length byte) is higher than BLE_GAP_ADV_MAX_SIZE !
+
+    expr[0] = service_data_length;
+    expr[1] = SERVICE_DATA_ID;
+    expr[2] = LSB(uuid);
+    expr[3] = MSB(uuid);
+
+    while ( adv_packet_ptr <= adv_packet_end - service_data_length )
     {
-        if ((adv_data->p_data[i] == expr[0]) && (adv_data->p_data[i + 1] == expr[1]) &&
-            (adv_data->p_data[i + 2] == expr[2]))
+        packet_length = adv_packet_ptr[0];
+
+        if (memcmp(adv_packet_ptr, expr, sizeof (expr)) == 0) // find expression 0xSSUUUU -> SS stands for service data, UUUU is service ID
         {
-            for (uint8_t j = 0; j < length; ++j)
-                *(value + j) = adv_data->p_data[i + j + 3];
+            memcpy(value, adv_packet_ptr + sizeof (expr), length);
             return NRF_SUCCESS;
         }
+        else
+            adv_packet_ptr += packet_length + 1;  // if not this packet - skip it
     }
     return NRF_ERROR_NOT_FOUND;
 }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -167,7 +167,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             ble_gap_addr_t address;
 
             // Initialize advertisement report for parsing.
-            adv_data.p_data = (uint8_t *)p_gap_evt->params.adv_report.data;
+            adv_data.p_data = (uint8_t *)(p_gap_evt->params.adv_report.data);
             adv_data.size   = p_gap_evt->params.adv_report.dlen;
             address         = p_gap_evt->params.adv_report.peer_addr;
 

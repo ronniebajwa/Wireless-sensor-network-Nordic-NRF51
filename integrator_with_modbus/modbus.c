@@ -461,7 +461,7 @@ static void request_handler(void * p_event_data, uint16_t event_size)
 
             if (exception != MB_EXC_NONE)
             {
-                // prepare_error_rsp();	 // OK
+                // prepare_error_rsp();   // OK
             }
             else
             {

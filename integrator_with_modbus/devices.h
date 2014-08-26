@@ -29,9 +29,12 @@
 #define FAULTY_TEMPERATURE   1000 /**< Incidates faulty battery level measurement. */
 #define FAULTY_BATTERY_LEVEL 0xFF /**< Incidates faulty temperature measurement. */
 
-#define SCAN_INTERVAL 0x00A0      /**< Determines scan interval in units of 0.625 millisecond. */
-#define SCAN_WINDOW   0x00A0      /**< Determines scan window in units of 0.625 millisecond. */
-#define SCAN_TIMEOUT  0x0001      /**< Determines scan timeout in seconds. */
+#define SCAN_INTERVAL 0x00A0 /**< Determines scan interval in units of 0.625 millisecond. */
+#define SCAN_WINDOW   0x00A0 /**< Determines scan window in units of 0.625 millisecond. */
+#define SCAN_TIMEOUT  0x0001 /**< Determines scan timeout in seconds. */
+
+#define SERVICE_DATA_ID           0x16           /**< Value to indicate service data field in advertising packet */
+#define MY_UUID_LED_SERVICE       0x1866         /**< Custom LED State Service UUID */
 
 #define MIN_CONNECTION_INTERVAL MSEC_TO_UNITS(7.5, UNIT_1_25_MS) /**< Determines maximum connection interval in millisecond. */
 #define MAX_CONNECTION_INTERVAL MSEC_TO_UNITS(30, UNIT_1_25_MS)  /**< Determines maximum connection interval in millisecond. */
@@ -52,26 +55,29 @@ void bt_scan_start(void);
  ****************************************************************/
 
 /**
- * @brief Handle advertising packet to find out if it is packet from a compatible temperature sensor. If so,
- *        retrieve useful data from packet, add device to list and eventually update modbus registers.
+ * @brief Browses advertising packet for useful data (temperature & battery level).
+ *        If whole this data is found, function check if the device's address is already on the list.
+ *        If the device isn't on the list, it is added, and sensors count is incremented
  *
- * @param[in] address address Device address.
- * @param[in] data data       Advertising packet data.
+ * @param[in]  address The device address.
+ * @param[in]  data    Advertising packet data.
  *
- * @retval NRF_SUCCESS if the data type is found in the report, NRF_ERROR_NOT_FOUND otherwise.
+ * @retval NRF_SUCCESS if the data type is found in the report.
+ * @retval NRF_ERROR_NOT_FOUND if the data type could not be found.
  */
 uint8_t bt_handle_temp_sensor(ble_gap_addr_t * address, uint8_array_t * data);
 
 
 /**
- * @brief Handle advertising packet to find out if it is packet from a compatible led_driver. If so,
- *        retrieve useful data from packet, add device to list and eventually update modbus registers.
+ * @brief Browses advertising packet for useful data - led_state.
+ *        If this data is found, function check if the device's address is already on the list.
+ *        If the device isn't on the list, it is added, and number of devices is incremented.
  *
- * @param[in] address address Device address.
- * @param[in] data data       Advertising packet data.
+ * @param[in]  address The device address.
+ * @param[in]  data    Advertising packet data.
  *
- * @retval NRF_SUCCESS if the data type is found in the report, NRF_ERROR_NOT_FOUND otherwise.
- */
+ * @retval NRF_SUCCESS if the data type is found in the report.
+*/
 uint8_t bt_handle_led_driver(ble_gap_addr_t * address, uint8_array_t * data);
 
 /***************************************************************

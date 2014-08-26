@@ -40,32 +40,32 @@ typedef struct
 /*//////////////// MODBUS REGISTRY MAP /////////////////
    START
    ................................
-   0x00	no of available devs  (R)
+   0x00     no of available devs     (R)
    ................................
-   0x01	sensor 1 type					(R)
-   0x02	sensor 1 data byte 1	(R/W)
-   0x03	sensor 1 data byte 2	(R/W)
-   0x04	sensor 1 data byte 3	(R/W)
-   0x05	sensor 1 data byte 4	(R/W)
-   0x06	sensor 1 data byte 5	(R/W)
-   0x07	sensor 1 data byte 6	(R/W)
-   0x08	sensor 1 data byte 7	(R/W)
+   0x01     sensor 1 type            (R)
+   0x02     sensor 1 data byte 1     (R/W)
+   0x03     sensor 1 data byte 2     (R/W)
+   0x04     sensor 1 data byte 3     (R/W)
+   0x05     sensor 1 data byte 4     (R/W)
+   0x06     sensor 1 data byte 5     (R/W)
+   0x07     sensor 1 data byte 6     (R/W)
+   0x08     sensor 1 data byte 7     (R/W)
    ................................
-   0x09	sensor 2 type                           (R)
-   0x0A	sensor 2 data byte 1	(R/W)
-   0x0B	sensor 2 data byte 2	(R/W)
-   0x0C	sensor 2 data byte 3	(R/W)
-   0x0D	sensor 2 data byte 4	(R/W)
-   0x0E	sensor 2 data byte 5	(R/W)
-   0x0F	sensor 2 data byte 6	(R/W)
-   0x10	sensor 2 data byte 7	(R/W)
+   0x09     sensor 2 type                           (R)
+   0x0A     sensor 2 data byte 1     (R/W)
+   0x0B     sensor 2 data byte 2     (R/W)
+   0x0C     sensor 2 data byte 3     (R/W)
+   0x0D     sensor 2 data byte 4     (R/W)
+   0x0E     sensor 2 data byte 5     (R/W)
+   0x0F     sensor 2 data byte 6     (R/W)
+   0x10     sensor 2 data byte 7     (R/W)
    ................................
    .
    .
    .
    ................................
    END
- */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               //////////////////////////////////////////////
+ */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       //////////////////////////////////////////////
 
 typedef enum
 {
