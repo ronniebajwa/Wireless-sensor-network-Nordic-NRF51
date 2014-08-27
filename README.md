@@ -1,4 +1,4 @@
-Wireless-sensors-system-Nordic-NRF51
+Wireless-sensors-network-Nordic-NRF51
 ====================================
 
-Wirless sensors system based on nRF51822 Eval Kit by Nordic Semiconductor
+Wirless sensors network based on nRF51822 Eval Kit by Nordic Semiconductor
