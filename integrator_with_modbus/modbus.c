@@ -1,3 +1,14 @@
+/* Copyright (C) 2014 Nordic Semiconductor. All Rights Reserved.
+ *
+ * The information contained herein is property of Nordic Semiconductor ASA.
+ * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
+ *
+ * Licensees are granted free, non-transferable use of the information. NO
+ * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
+ * the file.
+ *
+ */
+ 
 #include "modbus.h"
 #include "nrf_gpio.h"
 #include "boards.h"
@@ -10,21 +21,19 @@
 *   GLOBAL VARIABLES
 **************************************************************/
 
-uint8_t g_buffer[MAX_BUFFER_SIZE];
-uint8_t g_bytes_in_rsp_buffer = 0;
-
-uint8_t g_rq_idx          = 0;
-uint8_t g_rsp_idx         = 0;
-uint8_t g_rq_pending_flag = 0;
-
-app_timer_id_t m_packet_timeout_timer_id;
-mb_bt_memory_t g_memory;
+uint8_t        g_buffer[MAX_BUFFER_SIZE];    /**< RX/TX UART buffer */
+uint8_t        g_bytes_in_rsp_buffer = 0;    /**< To indicate number of bytes to send in buffer */
+                                           
+uint8_t        g_rq_idx          = 0;        /**< Ancillary variable to cope with buffer management whilst receiving a request bytes in ISR. */
+uint8_t        g_rsp_idx         = 0;        /**< Ancillary variable to cope with buffer management whilst sending a response bytes in ISR. */
+uint8_t        g_rq_pending_flag = 0;        /**< This flag indicates that MODBUS request is being processed. */
+                                           
+app_timer_id_t m_packet_timeout_timer_id;    /**< Handle for timer which timeout packet receiving and start it's processing. */
+mb_bt_memory_t g_memory;                     /**< MODBUS registers with sensors' data */
 
 /**************************************************************
 *   STATIC FUNCTIONS DECLARATIONS
 **************************************************************/
-
-// declarations
 
 static void      byte_received(void);
 static uint8_t   check_CRC(const uint8_t * packet, int hdr_len);
@@ -46,6 +55,11 @@ static void      start_rq_processing(void);
 * NON-STATIC FUNCTION
 ***********************************************************/
 
+/**
+ * @brief Reset internal variables and set device ready to receive next request.
+ *
+ * @retval  MB_EXC_NONE is always returned. 
+ */
 void mb_set_ready_for_rq(void)
 {
     g_bytes_in_rsp_buffer = 0;
@@ -56,7 +70,10 @@ void mb_set_ready_for_rq(void)
 }
 
 
-/* READY */
+/**
+ * @brief TIMER2 RQ Handler - when timer timeouts, request's receiving is done and it's processing starts.
+ *
+ */
 void TIMER2_IRQHandler(void)
 {
     NRF_TIMER2->EVENTS_COMPARE[0] = 0; // clear flag
@@ -65,7 +82,10 @@ void TIMER2_IRQHandler(void)
 }
 
 
-/* READY */
+/**
+ * @brief UART0 Handler - managing with receiving and sending single bytes comprises packets
+ *
+ */
 void UART0_IRQHandler(void)
 {
     if (NRF_UART0->EVENTS_RXDRDY)
@@ -94,7 +114,11 @@ void UART0_IRQHandler(void)
     }
 }
 
-
+/**
+ * @brief UART initialization for MODBUS
+ *
+ * @retval NRF_SUCCESS if device was found, error code otherwise.
+ */
 void mb_init(void)
 {
     uint32_t err_code;
@@ -131,6 +155,11 @@ void mb_init(void)
 }
 
 
+/**
+ * @brief Initiates sending packet as a response to write request.
+ *
+ * @retval  MB_EXC_NONE is always returned. 
+ */
 uint8_t mb_send_write_rsp()
 {
     mb_rq_write_hdr_t * rq_hdr;
@@ -160,6 +189,14 @@ uint8_t mb_send_write_rsp()
 }
 
 
+/**
+ * @brief Initiates sending response with error packet containing error code and exception.
+ *
+ * @param[in]  code      Error code.
+ * @param[in]  exception Exception number.
+ *
+ * @retval  MB_EXC_NONE is always returned. 
+ */
 uint8_t mb_send_error_rsp(uint8_t code, uint8_t exception)
 {
     mb_rsp_error_hdr_t rsp_hdr;
@@ -187,6 +224,11 @@ uint8_t mb_send_error_rsp(uint8_t code, uint8_t exception)
 *   STATIC FUNCTIONS DEFINITIONS
 **************************************************************/
 
+/**
+ * @brief    Function to process received byte.
+ * @details  When first byte is received, function starts timer and resets it's counter when next bytes are received.
+ *
+ */
 static void byte_received()
 {
     g_buffer[g_rq_idx] = NRF_UART0->RXD; // read RXD and save in packet structure
@@ -203,17 +245,27 @@ static void byte_received()
 }
 
 
+/**
+ * @brief    Function to check if packet's CRC is correct.
+ *
+ * @retval   NRF_SUCCESS if crc matches, NRF_ERROR_INVALID_DATA otherwise.
+ */
 static uint8_t check_CRC(const uint8_t * packet, int hdr_len)
 {
     uint16_t crc = (uint16_t)(packet[hdr_len - 1] << 8) | (uint16_t)packet[hdr_len - 2];
 
     if (get_CRC(packet, hdr_len - 2) == crc)
-        return 1;
+        return NRF_SUCCESS;
     else
-        return 0;
+        return NRF_ERROR_INVALID_DATA;
 }
 
 
+/**
+ * @brief    Function to check if packet's CRC is correct.
+ *
+ * @retval   MB_EXC_NONE if write request is correct, modbus exception code otherwise.
+ */
 static uint8_t check_write_rq()
 {
     mb_rq_write_hdr_t * rq_hdr;
@@ -243,7 +295,7 @@ static uint8_t check_write_rq()
     }
 
     // check CRC
-    if (!check_CRC((const uint8_t *)&g_buffer, g_rq_idx))
+    if (check_CRC((const uint8_t *)&g_buffer, g_rq_idx) != NRF_SUCCESS)
     {
         return MB_EXC_OTHER;
     }
@@ -258,7 +310,14 @@ static uint8_t check_write_rq()
 }
 
 
-// Compute the MODBUS RTU CRC
+/**
+ * @brief    Function to return CRC code of packet.
+ *
+ * @param[in] ptr Pointer to data.
+ * @param[in] len Length of data under pointer.
+ *
+ * @retval   MB_EXC_NONE if write request is correct, modbus exception code otherwise.
+ */
 static uint16_t get_CRC(const uint8_t * ptr, int len)
 {
     uint16_t crc = 0xFFFF;
@@ -287,6 +346,10 @@ static uint16_t get_CRC(const uint8_t * ptr, int len)
 }
 
 
+/**
+ * @brief    Function to handle packet timeout event.
+ *
+ */
 static void packet_timeout_handler(void)
 {
     start_rq_processing();
@@ -303,6 +366,10 @@ static void packet_timeout_handler(void)
 }
 
 
+/**
+ * @brief Initialization of timer.
+ *
+ */
 static void packet_timeout_timer_init()
 {
     NRF_TIMER2->MODE      = TIMER_MODE_MODE_Timer;
@@ -314,13 +381,20 @@ static void packet_timeout_timer_init()
     NVIC_EnableIRQ(TIMER2_IRQn);
 }
 
-
+/**
+ * @brief Resetting timer's counter.
+ *
+ */
 static void packet_timeout_timer_reset(void)
 {
     NRF_TIMER2->TASKS_CLEAR = 1;
 }
 
 
+/**
+ * @brief Starting timer.
+ *
+ */
 static void packet_timeout_timer_start(void)
 {
     NRF_TIMER2->TASKS_CLEAR = 1;
@@ -328,6 +402,10 @@ static void packet_timeout_timer_start(void)
 }
 
 
+/**
+ * @brief Stopping timer and clearing it's counter.
+ *
+ */
 static void packet_timeout_timer_stop(void)
 {
     NRF_TIMER2->TASKS_CLEAR = 1;
@@ -335,6 +413,11 @@ static void packet_timeout_timer_stop(void)
 }
 
 
+/**
+ * @brief Function to prepare MODBUS response for get device information request.
+ *
+ * @retval   MB_EXC_NONE if write request is correct, modbus exception code otherwise.
+ */
 static uint8_t prepare_id_rsp()
 {
     mb_rq_id_hdr_t * rq_hdr;
@@ -345,7 +428,7 @@ static uint8_t prepare_id_rsp()
     rq_hdr = (mb_rq_id_hdr_t *)&g_buffer;
 
     // check CRC
-    if (!check_CRC((const uint8_t *)&g_buffer, g_rq_idx))
+    if (check_CRC((const uint8_t *)&g_buffer, g_rq_idx) != NRF_SUCCESS)
         return MB_EXC_OTHER;
 
     // copy header to the buffer
@@ -389,6 +472,11 @@ static uint8_t prepare_id_rsp()
 }
 
 
+/**
+ * @brief Function to prepare MODBUS response for read request.
+ *
+ * @retval   MB_EXC_NONE if write request is correct, modbus exception code otherwise.
+ */
 static uint8_t prepare_read_rsp()
 {
     mb_rq_read_hdr_t * rq_hdr;
@@ -417,7 +505,7 @@ static uint8_t prepare_read_rsp()
     rsp_hdr.function = rq_hdr->function;
 
     // check CRC
-    if (!check_CRC((const uint8_t *)&g_buffer, g_rq_idx))
+    if (check_CRC((const uint8_t *)&g_buffer, g_rq_idx) != NRF_SUCCESS)
         return NRF_ERROR_INVALID_DATA;  // g_rq_idx hold number of received bytes
 
     // check if buffer will be exceeded
@@ -441,13 +529,21 @@ static uint8_t prepare_read_rsp()
 }
 
 
+/**
+ * @brief   Function to process MODBUS request.
+ * @details Retrieves fun code and despatches packet processing to proper function.
+ *          The function is added to app_scheduler queue when request received is finished.
+ *
+ * @param[in] p_event_data Not used. Demanded for app_scheduler compatibility.
+ * @param[in] event size   Not used. Demanded for app_scheduler compatibility.
+ */
 static void request_handler(void * p_event_data, uint16_t event_size)
 {
     uint8_t  fun;
     uint32_t bt_error;
     uint8_t  exception;
 
-    fun = g_buffer[1];
+    fun = g_buffer[1];  // second byte in request is always fun code.
 
     switch (fun)
     {
@@ -488,8 +584,14 @@ static void request_handler(void * p_event_data, uint16_t event_size)
 }
 
 
-/* READY */
-
+/**
+ * @brief   Low-level function to send single byte through UART.
+ * @details Due to multi-slave architecture TX pin of slave MODBUS device is push-pull
+ *          only when this device is sure to be the one which is transmitting. After having send
+ *          response packet, TX is configure as input Hi-Z pin.
+ *
+ * @param[in] send_byte byte to be send through UART.
+ */
 static void send_byte(uint8_t byte)
 {
     nrf_gpio_cfg_output(TX_PIN_NUMBER);
@@ -497,6 +599,9 @@ static void send_byte(uint8_t byte)
 }
 
 
+/**
+ * @brief   Function to send next byte from buffer through UART.
+ */
 static void send_rsp_byte(void)
 {
     if (g_rsp_idx < g_bytes_in_rsp_buffer)
@@ -511,6 +616,9 @@ static void send_rsp_byte(void)
 }
 
 
+/**
+ * @brief Function which should be called first to start request processing.
+ */
 static void start_rq_processing(void)
 {
     g_rq_pending_flag = 1;
